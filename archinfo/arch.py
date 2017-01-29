@@ -336,16 +336,18 @@ def arch_from_id(ident, endness='', bits=''):
         return ArchPPC32(endness)
     elif 'mips' in ident:
         if 'mipsel' in ident:
-            if bits == 64:
+            if bits == 64 or 'mipsel64' in ident:
                 return ArchMIPS64('Iend_LE')
             return ArchMIPS32('Iend_LE')
         if endness_unsure:
-            if bits == 64:
+            if bits == 64 or '64' in ident:
                 return ArchMIPS64('Iend_BE')
             return ArchMIPS32('Iend_BE')
-        if bits == 64:
+        if bits == 64 or 'mips64' in ident:
             return ArchMIPS64(endness)
         return ArchMIPS32(endness)
+    elif 'aarch' in ident or 'arm64' in ident:
+        return ArchAArch64(endness)
     elif 'arm' in ident or 'thumb' in ident:
         if endness_unsure:
             if 'l' in ident or 'le' in ident:
@@ -355,8 +357,6 @@ def arch_from_id(ident, endness='', bits=''):
         if bits == 64:
             return ArchAArch64(endness)
         return ArchARM(endness)
-    elif 'aarch' in ident:
-        return ArchAArch64(endness)
     elif 'amd64' in ident or ('x86' in ident and '64' in ident) or 'x64' in ident:
         return ArchAMD64('Iend_LE')
     elif '386' in ident or 'x86' in ident or 'metapc' in ident:
