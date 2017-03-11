@@ -77,7 +77,7 @@ class ArchPPC32(Arch):
 
     default_symbolic_registers = ['r0', 'r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9', 'r10', 'r11', 'r12',
                                    'r13', 'r14', 'r15', 'r16', 'r17', 'r18', 'r19', 'r20', 'r21', 'r22', 'r23', 'r24',
-                                   'r25', 'r26', 'r27', 'r28', 'r29', 'r30', 'r31', 'sp', 'pc']
+                                   'r25', 'r26', 'r27', 'r28', 'r29', 'r30', 'r31', 'sp', 'pc'] + ['f%d' % i for i in range(0, 32)]
 
     register_names = {
         0: 'host_evc_failaddr',
@@ -295,6 +295,40 @@ class ArchPPC32(Arch):
         'v29': (608, 16),
         'v30': (624, 16),
         'v31': (640, 16),
+        # There's an overlap of registers for floating point, so will point to same offset
+        'f0': (144, 8),
+        'f1': (160, 8),
+        'f2': (176, 8),
+        'f3': (192, 8),
+        'f4': (208, 8),
+        'f5': (224, 8),
+        'f6': (240, 8),
+        'f7': (256, 8),
+        'f8': (272, 8),
+        'f9': (288, 8),
+        'f10': (304, 8),
+        'f11': (320, 8),
+        'f12': (336, 8),
+        'f13': (352, 8),
+        'f14': (368, 8),
+        'f15': (384, 8),
+        'f16': (400, 8),
+        'f17': (416, 8),
+        'f18': (432, 8),
+        'f19': (448, 8),
+        'f20': (464, 8),
+        'f21': (480, 8),
+        'f22': (496, 8),
+        'f23': (512, 8),
+        'f24': (528, 8),
+        'f25': (544, 8),
+        'f26': (560, 8),
+        'f27': (576, 8),
+        'f28': (592, 8),
+        'f29': (608, 8),
+        'f30': (624, 8),
+        'f31': (640, 8),
+        # Resume vector registers
         'v32': (656, 16),
         'v33': (672, 16),
         'v34': (688, 16),
@@ -382,6 +416,14 @@ class ArchPPC32(Arch):
         registers['r8'],
         registers['r9'],
         registers['r10'],
+        registers['f1'],
+        registers['f2'],
+        registers['f3'],
+        registers['f4'],
+        registers['f5'],
+        registers['f6'],
+        registers['f7'],
+        registers['f8'],
     }
 
     argument_register_positions = {
@@ -393,6 +435,14 @@ class ArchPPC32(Arch):
         registers['r8']: 5,
         registers['r9']: 6,
         registers['r10']: 7,
+        registers['f1']: 0,
+        registers['f2']: 1,
+        registers['f3']: 2,
+        registers['f4']: 3,
+        registers['f5']: 4,
+        registers['f6']: 5,
+        registers['f7']: 6,
+        registers['f8']: 7,
     }
 
     got_section_name = '.plt'
